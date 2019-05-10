@@ -14,6 +14,7 @@ public class Lock {
     public static void main(String[] args) {
       Thread t1 = new Thread(new ThreadOne());
       Thread t2 = new Thread(new ThreadTwo());
+
       t1.start();
       t2.start();
     }
@@ -23,9 +24,11 @@ class ThreadOne implements Runnable{
     public void run() {
         try {
             while (true) {
+
                 synchronized (Lock.resource1) {
                     System.out.println(Thread.currentThread().getId() + "已经获取的资源1");
                     Thread.sleep(1000);
+//                    wait(1000);
                     synchronized (Lock.resource2) {
                         System.out.println(Thread.currentThread().getId() + "获取了资源2");
                     }
@@ -45,6 +48,7 @@ class ThreadTwo implements Runnable{
             synchronized (Lock.resource2) {
                 System.out.println("线程2获取了资源2");
                 Thread.sleep(1000);
+//                wait(1000);
                 synchronized (Lock.resource1) {
                     System.out.println("线程2获取了资源1");
                 }
